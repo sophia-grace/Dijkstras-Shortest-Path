@@ -24,11 +24,29 @@ public class Graph {
       BufferedReader in = new BufferedReader(new InputStreamReader(urlString.openStream()));
 
       String inputLine;
-      // skip the metadata
-      in.readLine();
+
+      //set the number of vertices
+      V = Integer.parseInt(in.readLine());
+
+      //set the number of edges
+      E = Integer.parseInt(in.readLine());
+
       // read each line in the dataset
       while ((inputLine = in.readLine()) != null) {
+        // create the edge
+        // split the pieces of the line
+        // pieces[0] = from, pieces[1] = to, pieces[2] = weight
+        String pieces[] = inputLine.split(" ");
 
+        // use pieces[] to create the from, to, and weight, converting each to int/double
+        int from = Integer.parseInt(pieces[0]);
+        int to = Integer.parseInt(pieces[1]);
+        double weight = Double.parseDouble(pieces[2]);
+
+        // use these to create the edge
+        Edge e = new Edge(from, to, weight);
+
+        System.out.println(e);
 
       }
       in.close();
