@@ -8,16 +8,11 @@ public class Graph {
   //Attributes
   int V; //# vertices in the Graph
   int E; //# edges in the Graph
-  ArrayList<Edge>[] edges; //an array of arraylist of edges
+  ArrayList<Edge>[] edges; //an array of arraylists of edges
 
   //Contstructor
   Graph(String url) {
     //reads graph from url, sets up V, E, edges
-
-    //initialize Attributes
-    V = 0;
-    E = 0;
-    edges = (ArrayList<Edge>[]) new ArrayList[V];
 
     try {
       URL urlString = new URL(url);
@@ -30,6 +25,13 @@ public class Graph {
 
       //set the number of edges
       E = Integer.parseInt(in.readLine());
+
+      //initialize edges
+      edges = (ArrayList<Edge>[]) new ArrayList[V];
+
+      for(int i  = 0; i < edges.length; i++) {
+        edges[i] = new ArrayList<Edge>();
+      }
 
       // read each line in the dataset
       while ((inputLine = in.readLine()) != null) {
@@ -46,8 +48,8 @@ public class Graph {
         // use these to create the edge
         Edge e = new Edge(from, to, weight);
 
-        System.out.println(e);
-
+        // add this edge to edges
+        edges[e.from()].add(e);
       }
       in.close();
 
