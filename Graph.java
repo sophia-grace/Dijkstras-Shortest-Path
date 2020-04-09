@@ -8,7 +8,8 @@ public class Graph {
   //Attributes
   int V; //# vertices in the Graph
   int E; //# edges in the Graph
-  ArrayList<Edge>[] edges; //an array of arraylists of edges
+  ArrayList<Edge>[] edges; //an array of arraylists of edges. each index is
+                          //an arraylist of edges leaving from the vertex of that index
 
   //Contstructor
   Graph(String url) {
@@ -49,6 +50,7 @@ public class Graph {
         Edge e = new Edge(from, to, weight);
 
         // add this edge to edges
+        // use the 'from' vertex as the index
         edges[e.from()].add(e);
       }
       in.close();
@@ -72,13 +74,37 @@ public class Graph {
 
   //returns the list of Edges, from vertex, v
   public ArrayList<Edge> getAdj(int v) {
-    return new ArrayList<Edge>();
+    try {
+      return edges[v];
+    } catch(Exception ArrayIndexOutOfBoundsException) {
+      System.out.println("That vertex is not in the Graph.\n");
+      return null;
+    }
   } //getAdj()
 
   //prints the entire graph
   public String toString() {
-    return "";
+    // set up the opening line
+    String graphString = "Graph G = <|V|, |E|> = <" + V + ", " + E + ">\n";
+
+    for(int i = 0; i < edges.length; i++) {
+      graphString += getAdj(i) + "\n";
+    }
+
+    return graphString;
   } //toString()
+
+  public static String getInput(String prompt) {
+    System.out.print(prompt);
+    String input = null;
+    try {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      input = br.readLine();
+    } catch (IOException io) {
+      io.printStackTrace();
+    }
+    return input;
+  } // getInput()
 
   public static void main(String[] args) {
     //create a new graph g with the tinyEWD.txt url as argument.
@@ -86,8 +112,45 @@ public class Graph {
     Graph g = new Graph(url);
 
     //print out the graph, g (using the print methods) (JAVA) System.out.println(g)
+    System.out.println(g);
 
     //for vertex <- 0 to g.V()-1 do
     //      print all edges coming out of v (use getAdj())
+    System.out.println("PRINTING ALL EDGES USING getAdj()");
+    for(int vertex = 0; vertex <= g.V()-1; vertex++) {
+      System.out.println(g.getAdj(vertex));
+    }
+    System.out.print("\n");
+
+    // get user queries
+    while(true) {
+      String prompt = "Enter a vertex: ";
+      String vertex = getInput(prompt);
+
+      try {
+        int v = Integer.parseInt(vertex);
+
+        //get the neighbors for that vertex
+        ArrayList<Edge> neighbors = g.getAdj(v);
+
+        // if it is a valid index
+        if(neighbors != null) {
+          // check if it has neighbors
+          if(neighbors.size() == 0) {
+            System.out.println(v + " has no neighbors.\n");
+          }
+          else {
+            System.out.println(v + " has the following neighbors:");
+            for(Edge e: neighbors) {
+              System.out.print(e + ", ");
+            }
+            System.out.print("\n\n");
+          }
+        }
+      }
+      catch(Exception NumberFormatException) {
+        System.out.println("Invalid input.\n");
+      }
+    }
   } //main()
 } //Graph
