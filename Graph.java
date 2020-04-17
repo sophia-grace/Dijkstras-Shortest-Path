@@ -11,6 +11,11 @@ public class Graph {
   ArrayList<Edge>[] edges; //an array of arraylists of edges. each index is
                           //an arraylist of edges leaving from the vertex of that index
 
+  // attributes for dijkstra
+  private double[] shortest;
+  private int[] pred;
+  private PriorityQueue frontier;
+
   //Contstructor
   Graph(String url) {
     //reads graph from url, sets up V, E, edges
@@ -105,6 +110,17 @@ public class Graph {
     }
     return input;
   } // getInput()
+
+  // TBD
+  // // compute all shortest paths from s
+  // public static ??? dijkstra(s) {
+  //
+  // } // dijkstra()
+  //
+  // // return the shortest path from s to t
+  // public static ??? getPath(s, t) {
+  //
+  // } // getPath()
 
   public static void main(String[] args) {
     //create a new graph g with the tinyEWD.txt url as argument.
