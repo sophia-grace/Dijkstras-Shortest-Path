@@ -1,17 +1,43 @@
+import java.util.*;
+import java.io.*;
+
 public class Lab10 {
+
+  public static String getInput(String prompt) {
+    System.out.print(prompt);
+    String input = null;
+    try {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      input = br.readLine();
+    } catch (IOException io) {
+      io.printStackTrace();
+    }
+    return input;
+  } // getInput()
+
+
   public static void main(String [] args) {
     // let g = Graph(<url string of graph data file>)
-    String url = "https://cs.brynmawr.edu/Courses/cs330/spring2020/tinyEWD.txt";
-    Graph g = new Graph(url);
+    if(args.length == 0) {
+      System.out.println("Missing url for the data.");
+    }
+    else {
+      String url = args[0];
+      Graph g = new Graph(url);
 
-    // Computes all shortest paths from vertex, 0
-    g.dijkstra(0);
-  //  path = g.getPath(0, 1)
 
-    // print path
-//    path = g.getPath(0, 4)
-    // print path
+      while(true) {
+        System.out.println();
+        String prompt1 = "Enter the source vertex: ";
+        int source = Integer.parseInt(getInput(prompt1));
+        String prompt2 = "Enter the destination vertex: ";
+        int destination = Integer.parseInt(getInput(prompt2));
 
-    // SAFE GUARD AGAINST INVALID GET PATH START ARGUMENT!! SHOULD ALWAYS BE 0!
+        g.dijkstra(source);
+        ArrayList<Integer> path = g.getPath(source, destination);
+        // print the path
+        g.printPath(path, source, destination);
+      }
+    }
   }
 }

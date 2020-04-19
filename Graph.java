@@ -44,7 +44,7 @@ public class Graph {
         // create the edge
         // split the pieces of the line
         // pieces[0] = from, pieces[1] = to, pieces[2] = weight
-        String pieces[] = inputLine.split(" ");
+        String pieces[] = inputLine.trim().split("\\s+");
 
         // use pieces[] to create the from, to, and weight, converting each to int/double
         int from = Integer.parseInt(pieces[0]);
@@ -122,11 +122,8 @@ public class Graph {
       // set the values for pred and shortest
       for(int v = 0; v < V; v++) {
        shortest[v] = Double.POSITIVE_INFINITY;
-      //  System.out.println(shortest[v]);
-
         pred[v] = -1;
       }
-
 
       frontier = new PriorityQueue<Integer>(new Comparator<Integer>() {
         public int compare(Integer v1, Integer v2) {
@@ -140,7 +137,6 @@ public class Graph {
         }
       });
 
-
       // set the pred and shortest for this vertex
       shortest[s] = 0;
       pred[s] = -1;
@@ -150,47 +146,101 @@ public class Graph {
       }
 
       while(frontier.size() > 0) {
-        for(int i = 0; i < V; i++) {
-          System.out.println(i + ": " + shortest[i]);
-        }
-
         // remove from FRONTIER the vertex with shortest value
         int u = frontier.poll();
-        System.out.println("\n\nVisiting " + u);
 
         // get the vertices adjacent to u
         ArrayList<Edge> adjacent = getAdj(u);
-
-      //  System.out.println(adjacent);
 
         // for each vertex v adjacent to u
         for(Edge v: adjacent) {
           relax(u, v);
         }
       }
-
-      for(int i = 0; i < V; i++) {
-        System.out.println(i + ": " + shortest[i]);
-      }
   } // dijkstra()
 
   public void relax(int u, Edge v) {
-    if(shortest[u] + v.weight < shortest[v.to]) {
-      shortest[v.to] = shortest[u] + v.weight;
-      pred[v.to] = u;
+    if(shortest[u] + v.weight() < shortest[v.to()]) {
+      shortest[v.to()] = shortest[u] + v.weight();
+      pred[v.to()] = u;
 
       // remove and update its place in the PriorityQueue
-      frontier.remove(v.to);
-      frontier.add(v.to);
+      frontier.remove(v.to());
+      frontier.add(v.to());
     }
   } // relax()
 
+  // return the shortest path from s to t
+  public ArrayList<Integer> getPath(int s, int t) {
+    // was djikstra run with s as source???
+    // if s was the source, shortest[s] will be 0.
+    // because the source to itself has a distance of 0.
+    if(shortest[s] != 0) {
+      System.out.println("Invalid source vertex! Try running djikstra() with " + s + " and try again.");
+      return null;
+    }
+    else {
+      ArrayList<Integer> path = new ArrayList<Integer>();
 
-  //
-  // // return the shortest path from s to t
-  // public static ??? getPath(s, t) {
-  //
-  // } // getPath()
+      int currentVertex = t;
+      path.add(0, currentVertex);
+      // stop if the graph is disconnected / if any of the pred values for the current vertex is -1
+      while(pred[currentVertex] != s && pred[currentVertex] != -1) {
+        path.add(0, pred[currentVertex]);
+        currentVertex = pred[currentVertex];
+      }
+      path.add(0, pred[currentVertex]);
+      return path;
+    }
+  } // getPath()
+
+  public void printPath(ArrayList<Integer> path, int source, int destination) {
+    if(path.get(0) != source || path.get(path.size() - 1) != destination) {
+      System.out.println("The path does not exist.");
+    }
+    else {
+      System.out.println("There is a path from " + source + " to " + destination + ".");
+      System.out.printf("The shortest path has a cost %.2f. Here it is:\n\n", cost(path));
+      for(int i = 0; i < path.size() - 1; i++) {
+        System.out.print(path.get(i) + " -> " + path.get(i + 1));
+
+        // now find the corresponding edge so can find its weight
+        double weight = getCorrespondingWeight(path.get(i), path.get(i + 1));
+        System.out.println(" [" + weight + "]");
+      }
+    }
+  }
+
+  // returns the edge that has s and d as its 'to' and 'from' vertices
+  public double getCorrespondingWeight(int s, int d) {
+    ArrayList<Edge> adj = getAdj(s);
+
+    for(Edge e : adj) {
+      if(e.to() == d) {
+        return e.weight();
+      }
+    }
+
+    // return a negative weight it no edge matches. This should never happen though
+    // because before getting here the program checks that the path exists.
+    return -1.0;
+  }
+
+  public double cost(ArrayList<Integer> path) {
+    double cost = 0.0;
+
+    for(int i = 0; i < path.size() - 1; i++) {
+      ArrayList<Edge> adj = getAdj(path.get(i));
+
+      for(Edge e : adj) {
+        if(e.to() == path.get(i + 1)) {
+          cost += e.weight();
+        }
+      }
+    }
+
+    return cost;
+  }
 
   public static void main(String[] args) {
     //create a new graph g with the tinyEWD.txt url as argument.

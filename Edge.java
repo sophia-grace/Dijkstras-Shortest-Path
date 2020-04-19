@@ -1,8 +1,8 @@
 public class Edge {
   // Attributes
-  int from; //vertex#
-  int to; //vertex#
-  double weight; //weight
+  private int from; //vertex#
+  private int to; //vertex#
+  private double weight; //weight
 
   //Constructor
   Edge(int from, int to, double weight) {
