@@ -1,3 +1,11 @@
+/*
+Name: Sophia Trump
+File: Edge.java
+Description: Defines the Edge class, for use in Graph.java. An
+edge contains the from vertex, the to vertex, and the weight between the vertices.
+Main() tests this functionality by creating some edges and printing them out.
+*/
+
 public class Edge {
   // Attributes
   private int from; //vertex#
