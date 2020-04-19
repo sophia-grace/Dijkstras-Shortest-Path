@@ -44,7 +44,7 @@ public class Edge {
   } //toString()
 
   public static void main(String[] args) {
-    System.out.println("Creating some edges...");
+    System.out.println("\nCreating some edges...");
 
     //create some edges
     Edge e1 = new Edge(1, 13, 0.5);
@@ -52,25 +52,26 @@ public class Edge {
     Edge e3 = new Edge(12404, 83, 0.0002);
 
     //print them
-    System.out.println("Edges created. Here are the Edges:");
+    System.out.println("\nEdges created. Here are the Edges:");
     System.out.println(e1);
     System.out.println(e2);
     System.out.println(e3);
 
     //test the accessors
-    System.out.println("The 'from' vertices:");
+    System.out.println("\nThe 'from' vertices:");
     System.out.println("e1: " + e1.from());
     System.out.println("e2: " + e2.from());
     System.out.println("e3: " + e3.from());
 
-    System.out.println("The 'to' vertices:");
+    System.out.println("\nThe 'to' vertices:");
     System.out.println("e1: " + e1.to());
     System.out.println("e2: " + e2.to());
     System.out.println("e3: " + e3.to());
 
-    System.out.println("The 'weights':");
+    System.out.println("\nThe 'weights':");
     System.out.println("e1: " + e1.weight());
     System.out.println("e2: " + e2.weight());
     System.out.println("e3: " + e3.weight());
+    System.out.println();
   }
 } //Edge

@@ -14,15 +14,15 @@ import java.nio.file.*;
 
 public class Graph {
   //Attributes
-  int V; //# vertices in the Graph
-  int E; //# edges in the Graph
+  private int V; //# vertices in the Graph
+  private int E; //# edges in the Graph
   ArrayList<Edge>[] edges; //an array of arraylists of edges. each index is
                           //an arraylist of edges leaving from the vertex of that index
 
   // Attributes for dijkstra
-  private double[] shortest;
-  private int[] pred;
-  private PriorityQueue<Integer> frontier;
+  private double[] shortest; // contains the weight of the shortest path from s to t
+  private int[] pred; // contains the predecessors of each vertex on shortest paths
+  private PriorityQueue<Integer> frontier; // vertices yet to be explored
 
   //Contstructor
   Graph(String url) {
@@ -145,7 +145,6 @@ public class Graph {
 
   // compute all shortest paths from s
   public void dijkstra(int s) {
-
       // set the values for pred and shortest
       for(int v = 0; v < V; v++) {
        shortest[v] = Double.POSITIVE_INFINITY;
@@ -221,7 +220,7 @@ public class Graph {
     else {
       System.out.println("There is a path from " + source + " to " + destination + ".");
       // output the cost of this path
-      System.out.printf("The shortest path has a cost %.2f. Here it is:\n\n", cost(path));
+      System.out.printf("The shortest path has a cost %.2f. Here it is:\n\n", shortest[destination]);
 
       // print the nodes in the path and their corresponding weights
       for(int i = 0; i < path.size() - 1; i++) {
@@ -249,29 +248,13 @@ public class Graph {
     return -1.0;
   } // getCorrespondingWeight()
 
-  private double cost(ArrayList<Integer> path) {
-    // outputs the cost of the path
-    double cost = 0.0;
-
-    for(int i = 0; i < path.size() - 1; i++) {
-      ArrayList<Edge> adj = getAdj(path.get(i));
-
-      for(Edge e : adj) {
-        if(e.to() == path.get(i + 1)) {
-          cost += e.weight();
-        }
-      }
-    }
-
-    return cost;
-  } // cost()
-
   public static void main(String[] args) {
     //create a new graph g with the tinyEWD.txt url as argument.
     String url = "https://cs.brynmawr.edu/Courses/cs330/spring2020/tinyEWD.txt";
     Graph g = new Graph(url);
 
     //print out the graph, g (using the print methods) (JAVA) System.out.println(g)
+    System.out.println();
     System.out.println(g);
 
     //for vertex <- 0 to g.V()-1 do
