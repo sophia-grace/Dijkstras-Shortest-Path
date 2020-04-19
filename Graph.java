@@ -14,7 +14,7 @@ public class Graph {
   // attributes for dijkstra
   private double[] shortest;
   private int[] pred;
-  private PriorityQueue frontier;
+  private PriorityQueue<Integer> frontier;
 
   //Contstructor
   Graph(String url) {
@@ -31,6 +31,22 @@ public class Graph {
 
       //set the number of edges
       E = Integer.parseInt(in.readLine());
+
+      // initialize shortest and pred
+      // and frontier
+      shortest = new double[V];
+      pred = new int[V];
+      frontier = new PriorityQueue<Integer>(new Comparator<Integer>() {
+        public int compare(Integer v1, Integer v2) {
+          if(v1 > v2) {
+            return -1;
+          }
+          else if(v1 < v2) {
+            return 1;
+          }
+          return 0;
+        }
+      });
 
       //initialize edges
       edges = (ArrayList<Edge>[]) new ArrayList[V];
@@ -111,11 +127,29 @@ public class Graph {
     return input;
   } // getInput()
 
-  // TBD
-  // // compute all shortest paths from s
-  // public static ??? dijkstra(s) {
-  //
-  // } // dijkstra()
+  // compute all shortest paths from s
+  public void dijkstra(int s) {
+      // set the values for pred and shortest
+      // and the frontier (combined per Lipi's note on Piazza)
+      for(int v = 0; v < V; v++) {
+        shortest[v] = Double.POSITIVE_INFINITY;
+        pred[v] = -1;
+        frontier.add(v);
+      }
+
+      // set the pred and shortest for this vertex
+      shortest[s] = 0;
+      pred[s] = -1;
+
+      while(frontier.size() > 0) {
+        // remove from FRONTIER the vertex with shortest value
+          System.out.println(frontier.poll());
+      }
+
+
+
+
+  } // dijkstra()
   //
   // // return the shortest path from s to t
   // public static ??? getPath(s, t) {

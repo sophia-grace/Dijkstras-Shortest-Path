@@ -6,10 +6,10 @@ public class Lab10 {
 
     // Computes all shortest paths from vertex, 0
     g.dijkstra(0);
-    path = g.getPath(0, 1)
+  //  path = g.getPath(0, 1)
 
     // print path
-    path = g.getPath(0, 4)
+//    path = g.getPath(0, 4)
     // print path
 
     // SAFE GUARD AGAINST INVALID GET PATH START ARGUMENT!! SHOULD ALWAYS BE 0!
