@@ -32,22 +32,6 @@ public class Graph {
       //set the number of edges
       E = Integer.parseInt(in.readLine());
 
-      // initialize shortest and pred
-      // and frontier
-      shortest = new double[V];
-      pred = new int[V];
-      frontier = new PriorityQueue<Integer>(new Comparator<Integer>() {
-        public int compare(Integer v1, Integer v2) {
-          if(v1 > v2) {
-            return -1;
-          }
-          else if(v1 < v2) {
-            return 1;
-          }
-          return 0;
-        }
-      });
-
       //initialize edges
       edges = (ArrayList<Edge>[]) new ArrayList[V];
 
@@ -129,27 +113,79 @@ public class Graph {
 
   // compute all shortest paths from s
   public void dijkstra(int s) {
+
+      // initialize shortest and pred
+      // and frontier
+      shortest = new double[V];
+      pred = new int[V];
+
       // set the values for pred and shortest
-      // and the frontier (combined per Lipi's note on Piazza)
       for(int v = 0; v < V; v++) {
-        shortest[v] = Double.POSITIVE_INFINITY;
+       shortest[v] = Double.POSITIVE_INFINITY;
+      //  System.out.println(shortest[v]);
+
         pred[v] = -1;
-        frontier.add(v);
       }
+
+
+      frontier = new PriorityQueue<Integer>(new Comparator<Integer>() {
+        public int compare(Integer v1, Integer v2) {
+          if(shortest[v1] < shortest[v2]) {
+            return -1;
+          }
+          else if(shortest[v1] > shortest[v2]) {
+            return 1;
+          }
+          return 0;
+        }
+      });
+
 
       // set the pred and shortest for this vertex
       shortest[s] = 0;
       pred[s] = -1;
 
-      while(frontier.size() > 0) {
-        // remove from FRONTIER the vertex with shortest value
-          System.out.println(frontier.poll());
+      for(int w = 0; w < V; w++) {
+        frontier.add(w);
       }
 
+      while(frontier.size() > 0) {
+        for(int i = 0; i < V; i++) {
+          System.out.println(i + ": " + shortest[i]);
+        }
 
+        // remove from FRONTIER the vertex with shortest value
+        int u = frontier.poll();
+        System.out.println("\n\nVisiting " + u);
 
+        // get the vertices adjacent to u
+        ArrayList<Edge> adjacent = getAdj(u);
 
+      //  System.out.println(adjacent);
+
+        // for each vertex v adjacent to u
+        for(Edge v: adjacent) {
+          relax(u, v);
+        }
+      }
+
+      for(int i = 0; i < V; i++) {
+        System.out.println(i + ": " + shortest[i]);
+      }
   } // dijkstra()
+
+  public void relax(int u, Edge v) {
+    if(shortest[u] + v.weight < shortest[v.to]) {
+      shortest[v.to] = shortest[u] + v.weight;
+      pred[v.to] = u;
+
+      // remove and update its place in the PriorityQueue
+      frontier.remove(v.to);
+      frontier.add(v.to);
+    }
+  } // relax()
+
+
   //
   // // return the shortest path from s to t
   // public static ??? getPath(s, t) {
