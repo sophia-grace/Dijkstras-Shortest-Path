@@ -99,7 +99,7 @@ public class Graph {
     return graphString;
   } //toString()
 
-  public static String getInput(String prompt) {
+  private static String getInput(String prompt) {
     System.out.print(prompt);
     String input = null;
     try {
@@ -159,7 +159,7 @@ public class Graph {
       }
   } // dijkstra()
 
-  public void relax(int u, Edge v) {
+  private void relax(int u, Edge v) {
     if(shortest[u] + v.weight() < shortest[v.to()]) {
       shortest[v.to()] = shortest[u] + v.weight();
       pred[v.to()] = u;
@@ -212,7 +212,7 @@ public class Graph {
   }
 
   // returns the edge that has s and d as its 'to' and 'from' vertices
-  public double getCorrespondingWeight(int s, int d) {
+  private double getCorrespondingWeight(int s, int d) {
     ArrayList<Edge> adj = getAdj(s);
 
     for(Edge e : adj) {
@@ -226,7 +226,7 @@ public class Graph {
     return -1.0;
   }
 
-  public double cost(ArrayList<Integer> path) {
+  private double cost(ArrayList<Integer> path) {
     double cost = 0.0;
 
     for(int i = 0; i < path.size() - 1; i++) {
