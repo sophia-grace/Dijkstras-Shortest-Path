@@ -1,0 +1,60 @@
+Script started on Mon Apr 20 16:35:50 2020
+[?1034hbash-3.2$ javac Lab10.java
+bash-3.2$ java Lab10 https://cs.brynmawr.edu/Courses/cs330/spring2020/tinyEWD.txt
+
+Enter the source vertex: 0
+Enter the destination vertex: 6
+There is a path from 0 to 6.
+The shortest path has a cost 1.51. Here it is:
+
+0 -> 2 [0.26]
+2 -> 7 [0.34]
+7 -> 3 [0.39]
+3 -> 6 [0.52]
+
+Enter the source vertex: quit
+
+Exception in thread "main" java.lang.IllegalArgumentException: Invalid source vertex! Try running djikstra() with 4 and try again.
+
+	at Graph.getPath(Graph.java:197)
+	at Lab10.main(Lab10.java:77)
+bash-3.2$ 
+bash-3.2$ 
+bash-3.2$ java Lab10 https://cs.brynmawr.edu/Courses/cs330/spring2020/mediumEWD.txt
+
+Enter the source vertex: 0
+Enter the destination vertex: 4
+There is a path from 0 to 4.
+The shortest path has a cost 0.42. Here it is:
+
+0 -> 44 [0.06471]
+44 -> 93 [0.06793]
+93 -> 187 [0.0764]
+187 -> 77 [0.10655]
+77 -> 4 [0.10733]
+
+Enter the source vertex: 0
+Enter the destination vertex: 1
+There is a path from 0 to 1.
+The shortest path has a cost 0.71. Here it is:
+
+0 -> 44 [0.06471]
+44 -> 93 [0.06793]
+93 -> 187 [0.0764]
+187 -> 77 [0.10655]
+77 -> 78 [0.10966]
+78 -> 128 [0.03633]
+128 -> 69 [0.11896]
+69 -> 107 [0.0564]
+107 -> 1 [0.07484]
+
+Enter the source vertex: quit
+
+Exception in thread "main" java.lang.IllegalArgumentException: Invalid source vertex! Try running djikstra() with 4 and try again.
+
+	at Graph.getPath(Graph.java:197)
+	at Lab10.main(Lab10.java:77)
+bash-3.2$ exit
+exit
+
+Script done on Mon Apr 20 16:37:26 2020

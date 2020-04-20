@@ -1,0 +1,30 @@
+Script started on Mon Apr 20 16:33:45 2020
+[?1034hbash-3.2$ javac Edge.java
+bash-3.2$ java Edge
+
+Creating some edges...
+
+Edges created. Here are the Edges:
+<1, 13, 0.5>
+<5, 12321, 1.32321>
+<12404, 83, 2.0E-4>
+
+The 'from' vertices:
+e1: 1
+e2: 5
+e3: 12404
+
+The 'to' vertices:
+e1: 13
+e2: 12321
+e3: 83
+
+The 'weights':
+e1: 0.5
+e2: 1.32321
+e3: 2.0E-4
+
+bash-3.2$ exit
+exit
+
+Script done on Mon Apr 20 16:33:57 2020
